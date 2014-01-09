@@ -1,0 +1,55 @@
+# Project: w32audio
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = obj/ComManager.o obj/dllmain.o obj/function.o obj/CHTTPClass.o obj/libc.o obj/loadDll.o obj/ofuscstring.o obj/osversion.o $(RES)
+LINKOBJ  = obj/ComManager.o obj/dllmain.o obj/function.o obj/CHTTPClass.o obj/libc.o obj/loadDll.o obj/ofuscstring.o obj/osversion.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib" --no-export-all-symbols --add-stdcall-alias  
+INCS =  -I"C:/Dev-Cpp/include" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
+BIN  = source/w32audio.dll
+CXXFLAGS = $(CXXINCS) -DBUILDING_DLL=1  
+CFLAGS = $(INCS) -DBUILDING_DLL=1  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before source/w32audio.dll all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+DLLWRAP=dllwrap.exe
+DEFFILE=source/libw32audio.def
+STATICLIB=source/libw32audio.a
+
+$(BIN): $(LINKOBJ)
+	$(DLLWRAP) --output-def $(DEFFILE) --driver-name c++ --implib $(STATICLIB) $(LINKOBJ) $(LIBS) -o $(BIN)
+
+obj/ComManager.o: source/ComManager.cpp
+	$(CPP) -c source/ComManager.cpp -o obj/ComManager.o $(CXXFLAGS)
+
+obj/dllmain.o: source/dllmain.cpp
+	$(CPP) -c source/dllmain.cpp -o obj/dllmain.o $(CXXFLAGS)
+
+obj/function.o: source/function.cpp
+	$(CPP) -c source/function.cpp -o obj/function.o $(CXXFLAGS)
+
+obj/CHTTPClass.o: ../shared/source/CHTTPClass.cpp
+	$(CPP) -c ../shared/source/CHTTPClass.cpp -o obj/CHTTPClass.o $(CXXFLAGS)
+
+obj/libc.o: ../shared/source/libc.cpp
+	$(CPP) -c ../shared/source/libc.cpp -o obj/libc.o $(CXXFLAGS)
+
+obj/loadDll.o: ../shared/source/loadDll.cpp
+	$(CPP) -c ../shared/source/loadDll.cpp -o obj/loadDll.o $(CXXFLAGS)
+
+obj/ofuscstring.o: ../shared/source/ofuscstring.cpp
+	$(CPP) -c ../shared/source/ofuscstring.cpp -o obj/ofuscstring.o $(CXXFLAGS)
+
+obj/osversion.o: ../shared/source/osversion.cpp
+	$(CPP) -c ../shared/source/osversion.cpp -o obj/osversion.o $(CXXFLAGS)
